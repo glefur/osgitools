@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<genmodel:GenModel xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore"
+    xmlns:genmodel="http://www.eclipse.org/emf/2002/GenModel" modelDirectory="/org.eclipselabs.osgitools/src-gen" editDirectory="/org.eclipselabs.osgitools.edit/src-gen"
+    editorDirectory="/org.eclipselabs.osgitools.editor/src-gen" modelPluginID="org.eclipselabs.osgitools"
+    modelName="OsgiInfrastructure" importerID="org.eclipse.emf.importer.ecore" complianceLevel="7.0"
+    copyrightFields="false">
+  <foreignModel>osgiInfrastructure.ecore</foreignModel>
+  <genPackages prefix="OSGiInfrastructure" basePackage="org.eclipselabs.osgitools"
+      disposableProviderFactory="true" ecorePackage="osgiInfrastructure.ecore#/">
+    <genEnums typeSafeEnumCompatible="false" ecoreEnum="osgiInfrastructure.ecore#//LINKING_POLICY">
+      <genEnumLiterals ecoreEnumLiteral="osgiInfrastructure.ecore#//LINKING_POLICY/STATIC"/>
+      <genEnumLiterals ecoreEnumLiteral="osgiInfrastructure.ecore#//LINKING_POLICY/DYNAMIC"/>
+    </genEnums>
+    <genClasses ecoreClass="osgiInfrastructure.ecore#//Project">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute osgiInfrastructure.ecore#//Project/name"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference osgiInfrastructure.ecore#//Project/bundles"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference osgiInfrastructure.ecore#//Project/services"/>
+      <genFeatures property="Readonly" notify="false" createChild="false" ecoreFeature="ecore:EReference osgiInfrastructure.ecore#//Project/allComponents"/>
+      <genOperations ecoreOperation="osgiInfrastructure.ecore#//Project/getService">
+        <genParameters ecoreParameter="osgiInfrastructure.ecore#//Project/getService/serviceName"/>
+      </genOperations>
+      <genOperations ecoreOperation="osgiInfrastructure.ecore#//Project/getProviders">
+        <genParameters ecoreParameter="osgiInfrastructure.ecore#//Project/getProviders/service"/>
+      </genOperations>
+    </genClasses>
+    <genClasses ecoreClass="osgiInfrastructure.ecore#//Bundle">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute osgiInfrastructure.ecore#//Bundle/symbolicName"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute osgiInfrastructure.ecore#//Bundle/version"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference osgiInfrastructure.ecore#//Bundle/components"/>
+    </genClasses>
+    <genClasses ecoreClass="osgiInfrastructure.ecore#//DynamicComponent">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute osgiInfrastructure.ecore#//DynamicComponent/name"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute osgiInfrastructure.ecore#//DynamicComponent/implementation"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference osgiInfrastructure.ecore#//DynamicComponent/provides"/>
+      <genFeatures children="true" createChild="true" propertySortChoices="true" ecoreFeature="ecore:EReference osgiInfrastructure.ecore#//DynamicComponent/requires"/>
+      <genFeatures property="Readonly" notify="false" createChild="false" ecoreFeature="ecore:EReference osgiInfrastructure.ecore#//DynamicComponent/requiredServices"/>
+    </genClasses>
+    <genClasses ecoreClass="osgiInfrastructure.ecore#//Service">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute osgiInfrastructure.ecore#//Service/name"/>
+    </genClasses>
+    <genClasses ecoreClass="osgiInfrastructure.ecore#//ServiceRequirement">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute osgiInfrastructure.ecore#//ServiceRequirement/cardinality"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute osgiInfrastructure.ecore#//ServiceRequirement/policy"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference osgiInfrastructure.ecore#//ServiceRequirement/reference"/>
+    </genClasses>
+    <nestedGenPackages prefix="Dependencies" basePackage="org.eclipselabs.osgitools.OSGiInfrastructure"
+        disposableProviderFactory="true" ecorePackage="osgiInfrastructure.ecore#//dependencies">
+      <genClasses ecoreClass="osgiInfrastructure.ecore#//dependencies/DependenciesManager">
+        <genFeatures notify="false" createChild="false" propertySortChoices="true"
+            ecoreFeature="ecore:EReference osgiInfrastructure.ecore#//dependencies/DependenciesManager/project"/>
+        <genFeatures createChild="false" ecoreFeature="ecore:EAttribute osgiInfrastructure.ecore#//dependencies/DependenciesManager/nodes"/>
+      </genClasses>
+      <genClasses image="false" ecoreClass="osgiInfrastructure.ecore#//dependencies/DependencyNode">
+        <genFeatures notify="false" createChild="false" propertySortChoices="true"
+            ecoreFeature="ecore:EReference osgiInfrastructure.ecore#//dependencies/DependencyNode/source"/>
+        <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference osgiInfrastructure.ecore#//dependencies/DependencyNode/dependencies"/>
+        <genFeatures createChild="false" ecoreFeature="ecore:EAttribute osgiInfrastructure.ecore#//dependencies/DependencyNode/complete"/>
+      </genClasses>
+      <genClasses ecoreClass="osgiInfrastructure.ecore#//dependencies/ServiceDependency">
+        <genFeatures notify="false" createChild="false" propertySortChoices="true"
+            ecoreFeature="ecore:EReference osgiInfrastructure.ecore#//dependencies/ServiceDependency/target"/>
+        <genFeatures notify="false" createChild="false" propertySortChoices="true"
+            ecoreFeature="ecore:EReference osgiInfrastructure.ecore#//dependencies/ServiceDependency/via"/>
+      </genClasses>
+      <genClasses ecoreClass="osgiInfrastructure.ecore#//dependencies/DependencyPath">
+        <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference osgiInfrastructure.ecore#//dependencies/DependencyPath/hops"/>
+        <genFeatures property="Readonly" notify="false" createChild="false" ecoreFeature="ecore:EReference osgiInfrastructure.ecore#//dependencies/DependencyPath/from"/>
+        <genFeatures property="Readonly" notify="false" createChild="false" ecoreFeature="ecore:EReference osgiInfrastructure.ecore#//dependencies/DependencyPath/to"/>
+        <genFeatures property="Readonly" createChild="false" ecoreFeature="ecore:EAttribute osgiInfrastructure.ecore#//dependencies/DependencyPath/cycle"/>
+        <genOperations ecoreOperation="osgiInfrastructure.ecore#//dependencies/DependencyPath/includes">
+          <genParameters ecoreParameter="osgiInfrastructure.ecore#//dependencies/DependencyPath/includes/component"/>
+        </genOperations>
+        <genOperations ecoreOperation="osgiInfrastructure.ecore#//dependencies/DependencyPath/followingHop">
+          <genParameters ecoreParameter="osgiInfrastructure.ecore#//dependencies/DependencyPath/followingHop/component"/>
+        </genOperations>
+      </genClasses>
+      <genClasses ecoreClass="osgiInfrastructure.ecore#//dependencies/Hop">
+        <genFeatures notify="false" createChild="false" propertySortChoices="true"
+            ecoreFeature="ecore:EReference osgiInfrastructure.ecore#//dependencies/Hop/from"/>
+        <genFeatures notify="false" createChild="false" propertySortChoices="true"
+            ecoreFeature="ecore:EReference osgiInfrastructure.ecore#//dependencies/Hop/to"/>
+        <genFeatures notify="false" createChild="false" propertySortChoices="true"
+            ecoreFeature="ecore:EReference osgiInfrastructure.ecore#//dependencies/Hop/via"/>
+      </genClasses>
+    </nestedGenPackages>
+  </genPackages>
+</genmodel:GenModel>

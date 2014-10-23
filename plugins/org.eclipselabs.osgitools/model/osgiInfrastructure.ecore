@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ecore:EPackage xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" name="OSGiInfrastructure" nsURI="http://www.eclipselabs.org/osgitools/infrastructure/1.0"
+    nsPrefix="osgi-infra">
+  <eClassifiers xsi:type="ecore:EClass" name="Project">
+    <eOperations name="getService" eType="#//Service">
+      <eParameters name="serviceName" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    </eOperations>
+    <eOperations name="getProviders" upperBound="-1" eType="#//DynamicComponent">
+      <eParameters name="service" lowerBound="1" eType="#//Service"/>
+    </eOperations>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="bundles" upperBound="-1"
+        eType="#//Bundle" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="services" upperBound="-1"
+        eType="#//Service" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="allComponents" upperBound="-1"
+        eType="#//DynamicComponent" changeable="false" volatile="true" transient="true"
+        derived="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Bundle">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="symbolicName" lowerBound="1"
+        eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="version" lowerBound="1"
+        eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="components" upperBound="-1"
+        eType="#//DynamicComponent" containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="DynamicComponent">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="implementation" lowerBound="1"
+        eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="provides" upperBound="-1"
+        eType="#//Service"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="requires" upperBound="-1"
+        eType="#//ServiceRequirement" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="requiredServices" upperBound="-1"
+        eType="#//Service" changeable="false" volatile="true" transient="true" derived="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Service">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="ServiceRequirement">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="cardinality" lowerBound="1"
+        eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="policy" eType="#//LINKING_POLICY"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="reference" lowerBound="1"
+        eType="#//Service"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EEnum" name="LINKING_POLICY">
+    <eLiterals name="STATIC"/>
+    <eLiterals name="DYNAMIC" value="1"/>
+  </eClassifiers>
+  <eSubpackages name="dependencies" nsURI="http://www.eclipselabs.org/osgitools/infrastructure/dependencies/1.0"
+      nsPrefix="osgi-dependencies">
+    <eClassifiers xsi:type="ecore:EClass" name="DependenciesManager">
+      <eStructuralFeatures xsi:type="ecore:EReference" name="project" lowerBound="1"
+          eType="#//Project"/>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="nodes" lowerBound="1"
+          transient="true">
+        <eGenericType eClassifier="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EMap">
+          <eTypeArguments eClassifier="#//DynamicComponent"/>
+          <eTypeArguments eClassifier="#//dependencies/DependencyNode"/>
+        </eGenericType>
+      </eStructuralFeatures>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EClass" name="DependencyNode">
+      <eStructuralFeatures xsi:type="ecore:EReference" name="source" lowerBound="1"
+          eType="#//DynamicComponent"/>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="dependencies" upperBound="-1"
+          eType="#//dependencies/ServiceDependency" containment="true"/>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="complete" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"
+          defaultValueLiteral="false"/>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EClass" name="ServiceDependency">
+      <eStructuralFeatures xsi:type="ecore:EReference" name="target" lowerBound="1"
+          eType="#//dependencies/DependencyNode"/>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="via" lowerBound="1" eType="#//Service"/>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EClass" name="DependencyPath">
+      <eOperations name="includes" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean">
+        <eParameters name="component" lowerBound="1" eType="#//DynamicComponent"/>
+      </eOperations>
+      <eOperations name="followingHop" lowerBound="1" eType="#//dependencies/Hop">
+        <eParameters name="component" lowerBound="1" eType="#//DynamicComponent"/>
+      </eOperations>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="hops" upperBound="-1"
+          eType="#//dependencies/Hop" containment="true"/>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="from" lowerBound="1"
+          eType="#//DynamicComponent" changeable="false" volatile="true" transient="true"
+          derived="true"/>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="to" lowerBound="1" eType="#//DynamicComponent"
+          changeable="false" volatile="true" transient="true" derived="true"/>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="cycle" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"
+          changeable="false" volatile="true" transient="true" derived="true"/>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EClass" name="Hop">
+      <eStructuralFeatures xsi:type="ecore:EReference" name="from" lowerBound="1"
+          eType="#//DynamicComponent"/>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="to" lowerBound="1" eType="#//DynamicComponent"/>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="via" lowerBound="1" eType="#//Service"/>
+    </eClassifiers>
+  </eSubpackages>
+</ecore:EPackage>

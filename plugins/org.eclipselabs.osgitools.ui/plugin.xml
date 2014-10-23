@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+
+   <extension
+         point="org.eclipse.ui.commands">
+      <category
+            name="OSGi Tools"
+            id="org.eclipselabs.osgitools.ui.commands.category">
+      </category>
+      <command
+            name="Create OSGi Infrastructure model"
+            categoryId="org.eclipselabs.osgitools.ui.commands.category"
+            id="org.eclipselabs.osgitools.ui.commands.osgiModel">
+      </command>
+      <command
+            categoryId="org.eclipselabs.osgitools.ui.commands.category"
+            id="org.eclipselabs.osgitools.ui.commands.cyclesDetection"
+            name="Detect cycles">
+      </command>
+   </extension>
+   <extension
+         point="org.eclipse.ui.handlers">
+      <handler
+            commandId="org.eclipselabs.osgitools.ui.commands.osgiModel"
+            class="org.eclipselabs.osgitools.ui.handlers.AnalysisHandler">
+      </handler>
+      <handler
+            class="org.eclipselabs.osgitools.ui.handlers.CyclesDetectionHandler"
+            commandId="org.eclipselabs.osgitools.ui.commands.cyclesDetection">
+      </handler>
+   </extension>
+   <extension
+         point="org.eclipse.ui.menus">
+      <menuContribution
+            locationURI="popup:org.eclipse.jdt.ui.PackageExplorer?after=additions">
+         <menu
+               label="OSGi Tools"
+               id="org.eclipselabs.osgitools.ui.menus.mainMenu">
+            <command
+                  commandId="org.eclipselabs.osgitools.ui.commands.osgiModel"
+                  id="org.eclipselabs.osgitools.ui.menus.osgiModel">
+            </command>
+         </menu>
+      </menuContribution>
+      <menuContribution
+            locationURI="popup:org.eclipse.jdt.ui.PackageExplorer?after=additions">
+         <menu
+               label="OSGi Tools"
+               id="org.eclipselabs.osgitools.ui.menus.mainMenu">
+            <command
+                  commandId="org.eclipselabs.osgitools.ui.commands.cyclesDetection"
+                  id="org.eclipselabs.osgitools.ui.menus.cyclesDetection">
+               <visibleWhen
+                     checkEnabled="false">
+                  <with
+                        variable="selection">
+                     <test
+                           forcePluginActivation="true"
+                           property="org.eclipselabs.osgitools.ui.cyclesDetectionValidator">
+                     </test>
+                  </with>
+               </visibleWhen>
+			</command>
+         </menu>
+      </menuContribution>
+   </extension>
+   <extension
+         point="org.eclipse.core.expressions.propertyTesters">
+      <propertyTester
+            class="org.eclipselabs.osgitools.ui.propertyTester.CyclesDetectionValidator"
+            id="org.eclipselabs.osgitools.ui.cyclesDetectionValidator"
+            namespace="org.eclipselabs.osgitools.ui"
+            properties="cyclesDetectionValidator"
+            type="java.lang.Object">
+      </propertyTester>
+   </extension>
+
+</plugin>
