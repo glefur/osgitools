@@ -6,7 +6,6 @@ import org.eclipse.emf.common.notify.Adapter;
 import org.eclipse.emf.common.notify.Notifier;
 import org.eclipse.emf.common.notify.impl.AdapterFactoryImpl;
 import org.eclipse.emf.ecore.EObject;
-import org.eclipselabs.osgitools.OSGiInfrastructure.*;
 import org.eclipselabs.osgitools.OSGiInfrastructure.Bundle;
 import org.eclipselabs.osgitools.OSGiInfrastructure.DynamicComponent;
 import org.eclipselabs.osgitools.OSGiInfrastructure.OSGiInfrastructurePackage;

@@ -44,7 +44,7 @@
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference osgiInfrastructure.ecore#//ServiceRequirement/reference"/>
     </genClasses>
     <nestedGenPackages prefix="Dependencies" basePackage="org.eclipselabs.osgitools.OSGiInfrastructure"
-        disposableProviderFactory="true" ecorePackage="osgiInfrastructure.ecore#//dependencies">
+        disposableProviderFactory="true" generateModelWizard="false" ecorePackage="osgiInfrastructure.ecore#//dependencies">
       <genClasses ecoreClass="osgiInfrastructure.ecore#//dependencies/DependenciesManager">
         <genFeatures notify="false" createChild="false" propertySortChoices="true"
             ecoreFeature="ecore:EReference osgiInfrastructure.ecore#//dependencies/DependenciesManager/project"/>

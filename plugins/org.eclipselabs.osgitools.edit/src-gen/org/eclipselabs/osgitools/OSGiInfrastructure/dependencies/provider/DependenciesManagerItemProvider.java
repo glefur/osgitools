@@ -23,8 +23,10 @@ import org.eclipse.emf.edit.provider.ItemPropertyDescriptor;
 import org.eclipse.emf.edit.provider.ItemProviderAdapter;
 import org.eclipse.emf.edit.provider.ViewerNotification;
 
+import org.eclipselabs.osgitools.OSGiInfrastructure.DynamicComponent;
 import org.eclipselabs.osgitools.OSGiInfrastructure.dependencies.DependenciesManager;
 import org.eclipselabs.osgitools.OSGiInfrastructure.dependencies.DependenciesPackage;
+import org.eclipselabs.osgitools.OSGiInfrastructure.dependencies.DependencyNode;
 
 import org.eclipselabs.osgitools.OSGiInfrastructure.provider.OsgiInfrastructureEditPlugin;
 
@@ -128,11 +130,11 @@ public class DependenciesManagerItemProvider
 	 * This returns the label text for the adapted class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
+	 * @not-generated GLF
 	 */
 	@Override
 	public String getText(Object object) {
-		Map labelValue = ((DependenciesManager)object).getNodes();
+		Map<DynamicComponent, DependencyNode> labelValue = ((DependenciesManager)object).getNodes();
 		String label = labelValue == null ? null : labelValue.toString();
 		return label == null || label.length() == 0 ?
 			getString("_UI_DependenciesManager_type") :

@@ -1,20 +1,15 @@
 package org.eclipselabs.osgitools.ui.handlers;
 
-import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Collections;
-import java.util.List;
 
 import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.core.resources.IFile;
-import org.eclipse.core.resources.IProject;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
-import org.eclipse.jdt.internal.core.JavaProject;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.ui.IWorkbenchWindow;
@@ -25,7 +20,6 @@ import org.eclipselabs.osgitools.OSGiInfrastructure.dependencies.DependencyPath;
 import org.eclipselabs.osgitools.OSGiInfrastructure.dependencies.Hop;
 import org.eclipselabs.osgitools.internal.services.OSGiServiceImpl;
 import org.eclipselabs.osgitools.services.OSGiService;
-import org.eclipselabs.osgitools.ui.dialogs.AnalyzerConfigurator;
 
 /**
  * Our sample handler extends AbstractHandler, an IHandler base class.

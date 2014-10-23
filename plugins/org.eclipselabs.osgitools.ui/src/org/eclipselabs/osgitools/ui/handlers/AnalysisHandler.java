@@ -1,7 +1,6 @@
 package org.eclipselabs.osgitools.ui.handlers;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
@@ -17,9 +16,6 @@ import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.handlers.HandlerUtil;
 import org.eclipselabs.osgitools.OSGiInfrastructure.Project;
-import org.eclipselabs.osgitools.OSGiInfrastructure.dependencies.DependenciesManager;
-import org.eclipselabs.osgitools.OSGiInfrastructure.dependencies.DependencyPath;
-import org.eclipselabs.osgitools.OSGiInfrastructure.dependencies.Hop;
 import org.eclipselabs.osgitools.internal.services.OSGiServiceImpl;
 import org.eclipselabs.osgitools.services.OSGiService;
 import org.eclipselabs.osgitools.ui.dialogs.AnalyzerConfigurator;
@@ -29,6 +25,7 @@ import org.eclipselabs.osgitools.ui.dialogs.AnalyzerConfigurator;
  * @see org.eclipse.core.commands.IHandler
  * @see org.eclipse.core.commands.AbstractHandler
  */
+@SuppressWarnings("restriction")
 public class AnalysisHandler extends AbstractHandler {
 	
 	private OSGiService osgiService;

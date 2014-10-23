@@ -8,7 +8,6 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.impl.EFactoryImpl;
 import org.eclipse.emf.ecore.plugin.EcorePlugin;
-import org.eclipselabs.osgitools.OSGiInfrastructure.*;
 import org.eclipselabs.osgitools.OSGiInfrastructure.Bundle;
 import org.eclipselabs.osgitools.OSGiInfrastructure.DynamicComponent;
 import org.eclipselabs.osgitools.OSGiInfrastructure.LINKING_POLICY;

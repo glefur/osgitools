@@ -5,7 +5,6 @@ package org.eclipselabs.osgitools.OSGiInfrastructure.util;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.util.Switch;
-import org.eclipselabs.osgitools.OSGiInfrastructure.*;
 import org.eclipselabs.osgitools.OSGiInfrastructure.Bundle;
 import org.eclipselabs.osgitools.OSGiInfrastructure.DynamicComponent;
 import org.eclipselabs.osgitools.OSGiInfrastructure.OSGiInfrastructurePackage;
