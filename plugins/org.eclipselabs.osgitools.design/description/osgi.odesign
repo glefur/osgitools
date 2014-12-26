@@ -1,57 +1,83 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<description:Group xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:description="http://www.obeo.fr/dsl/viewpoint/description/1.1.0" xmlns:style="http://www.obeo.fr/dsl/viewpoint/description/style/1.1.0" name="osgi" version="6.7.0.201302071200">
+<description:Group xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:description="http://www.obeo.fr/dsl/viewpoint/description/1.1.0" xmlns:filter="http://www.obeo.fr/dsl/viewpoint/description/filter/1.1.0" xmlns:style="http://www.obeo.fr/dsl/viewpoint/description/style/1.1.0" xmlns:tool="http://www.obeo.fr/dsl/viewpoint/description/tool/1.1.0" name="osgi" version="6.7.0.201302071200">
   <ownedViewpoints name="org.eclipselabs.osgitools.Analysis" label="OSGi Analysis" modelFileExtension="osgi">
-    <ownedRepresentations xsi:type="description:DiagramDescription" name="osgi.Infrastructure" label="Infrastructure" domainClass="OSGiInfrastructure.Project">
+    <ownedRepresentations xsi:type="description:DiagramDescription" name="osgi.componentscartography" label="Components Cartography" titleExpression="[self.name + ' Components Cartography'/]" domainClass="OSGiInfrastructure.Project">
+      <metamodel href="../../org.eclipselabs.osgitools/model/osgiInfrastructure.ecore#/"/>
+      <metamodel href="../../org.eclipselabs.osgitools/model/osgiInfrastructure.ecore#//dependencies"/>
+      <filters xsi:type="filter:CompositeFilterDescription" name="org.eclipselabs.osgitools.filters.emptybundles" label="Empty Bundles">
+        <filters xsi:type="filter:MappingFilter" mappings="//@ownedViewpoints[name='org.eclipselabs.osgitools.Analysis']/@ownedRepresentations[name='osgi.componentscartography']/@defaultLayer/@containerMappings[name='Bundle']" semanticConditionExpression="[self.oclAsType(Bundle).components->notEmpty()/]"/>
+      </filters>
+      <defaultLayer name="Default">
+        <nodeMappings name="Service" semanticCandidatesExpression="feature:services" domainClass="OSGiInfrastructure.Service">
+          <style xsi:type="style:WorkspaceImageDescription" labelSize="10" labelFormat="italic" showIcon="false" labelColor="//@userColorsPalettes[name='MAM']/@entries[name='Strong%20Green']" sizeComputationExpression="-1" resizeKind="NSEW" workspacePath="/org.eclipselabs.osgitools.design/resources/pics/service.svg">
+            <borderColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+          </style>
+        </nodeMappings>
+        <edgeMappings name="Provides" sourceMapping="//@ownedViewpoints[name='org.eclipselabs.osgitools.Analysis']/@ownedRepresentations[name='osgi.componentscartography']/@defaultLayer/@containerMappings[name='Bundle']/@subNodeMappings[name='Component']" targetMapping="//@ownedViewpoints[name='org.eclipselabs.osgitools.Analysis']/@ownedRepresentations[name='osgi.componentscartography']/@defaultLayer/@nodeMappings[name='Service']" targetFinderExpression="feature:provides">
+          <style strokeColor="//@userColorsPalettes[name='MAM']/@entries[name='Strong%20Blue']" targetArrow="InputClosedArrow" sizeComputationExpression="2"/>
+        </edgeMappings>
+        <edgeMappings name="Requires" semanticCandidatesExpression="[self.bundles.components.requires/]" sourceMapping="//@ownedViewpoints[name='org.eclipselabs.osgitools.Analysis']/@ownedRepresentations[name='osgi.componentscartography']/@defaultLayer/@containerMappings[name='Bundle']/@subNodeMappings[name='Component']" targetMapping="//@ownedViewpoints[name='org.eclipselabs.osgitools.Analysis']/@ownedRepresentations[name='osgi.componentscartography']/@defaultLayer/@nodeMappings[name='Service']" targetFinderExpression="feature:reference" sourceFinderExpression="feature:eContainer" domainClass="OSGiInfrastructure.ServiceRequirement" useDomainElement="true">
+          <style strokeColor="//@userColorsPalettes[name='MAM']/@entries[name='Strong%20Green']" lineStyle="dash" sizeComputationExpression="2"/>
+        </edgeMappings>
+        <containerMappings name="Bundle" semanticCandidatesExpression="feature:bundles" domainClass="OSGiInfrastructure.Bundle">
+          <subNodeMappings name="Component" semanticCandidatesExpression="feature:components" domainClass="OSGiInfrastructure.DynamicComponent">
+            <style xsi:type="style:WorkspaceImageDescription" labelSize="10" showIcon="false" labelColor="//@userColorsPalettes[name='MAM']/@entries[name='Strong%20Blue']" sizeComputationExpression="-1" resizeKind="NSEW" workspacePath="/org.eclipselabs.osgitools.design/resources/pics/component.svg">
+              <borderColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+            </style>
+          </subNodeMappings>
+          <style xsi:type="style:FlatContainerStyleDescription" arcWidth="15" arcHeight="15" borderSizeComputationExpression="3" labelSize="12" labelFormat="bold" showIcon="false" labelExpression="feature:symbolicName" roundedCorner="true" backgroundStyle="GradientTopToBottom" backgroundColor="//@userColorsPalettes[name='MAM']/@entries[name='Creme']" foregroundColor="//@userColorsPalettes[name='MAM']/@entries[name='Creme']">
+            <borderColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='dark_chocolate']"/>
+            <labelColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='dark_chocolate']"/>
+          </style>
+        </containerMappings>
+      </defaultLayer>
+    </ownedRepresentations>
+    <ownedRepresentations xsi:type="description:DiagramDescription" name="osgi.impactanalysis" label="Impact Analysis" titleExpression="Impact Analysis" domainClass="OSGiInfrastructure.Project">
       <metamodel href="../../org.eclipselabs.osgitools/model/osgiInfrastructure.ecore#/"/>
       <metamodel href="../../org.eclipselabs.osgitools/model/osgiInfrastructure.ecore#//dependencies"/>
       <defaultLayer name="Default">
-        <edgeMappings name="dependsOn" sourceMapping="//@ownedViewpoints[name='org.eclipselabs.osgitools.Analysis']/@ownedRepresentations[name='osgi.Infrastructure']/@defaultLayer/@containerMappings[name='Bundle']/@subNodeMappings[name='Component']" targetMapping="//@ownedViewpoints[name='org.eclipselabs.osgitools.Analysis']/@ownedRepresentations[name='osgi.Infrastructure']/@defaultLayer/@containerMappings[name='Bundle']/@subNodeMappings[name='Component']" targetFinderExpression="service:getDependsOn">
+        <nodeMappings name="osgi.imp.component" label="osgi.imp.component" semanticCandidatesExpression="[self.oclAsType(Project).bundles.components/]" createElements="false" domainClass="OSGiInfrastructure.DynamicComponent">
+          <style xsi:type="style:WorkspaceImageDescription" labelSize="10" showIcon="false" labelColor="//@userColorsPalettes[name='MAM']/@entries[name='Strong%20Blue']" sizeComputationExpression="-1" resizeKind="NSEW" workspacePath="/org.eclipselabs.osgitools.design/resources/pics/component.svg">
+            <borderColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+          </style>
+        </nodeMappings>
+        <edgeMappings name="dependsOn" sourceMapping="//@ownedViewpoints[name='org.eclipselabs.osgitools.Analysis']/@ownedRepresentations[name='osgi.impactanalysis']/@defaultLayer/@nodeMappings[name='osgi.imp.component']" targetMapping="//@ownedViewpoints[name='org.eclipselabs.osgitools.Analysis']/@ownedRepresentations[name='osgi.impactanalysis']/@defaultLayer/@nodeMappings[name='osgi.imp.component']" targetFinderExpression="service:getDependsOn">
           <style lineStyle="dash" sizeComputationExpression="3">
             <strokeColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='dark_blue']"/>
           </style>
         </edgeMappings>
-        <containerMappings name="Bundle" semanticCandidatesExpression="feature:bundles" domainClass="OSGiInfrastructure.Bundle">
-          <subNodeMappings name="Component" semanticCandidatesExpression="feature:components" domainClass="OSGiInfrastructure.DynamicComponent">
-            <style xsi:type="style:BundledImageDescription" labelSize="10" showIcon="false" labelPosition="node" resizeKind="NSEW">
-              <borderColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
-              <labelColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='white']"/>
-              <color xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='dark_blue']"/>
-            </style>
-          </subNodeMappings>
-          <style xsi:type="style:FlatContainerStyleDescription" labelSize="10" labelFormat="bold" showIcon="false" labelExpression="feature:symbolicName" backgroundStyle="GradientTopToBottom">
-            <borderColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='dark_chocolate']"/>
-            <labelColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='dark_chocolate']"/>
-            <backgroundColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='light_chocolate']"/>
-            <foregroundColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='chocolate']"/>
-          </style>
-        </containerMappings>
+        <toolSections name="osgi.impactanalysis.Analysis" label="Analysis">
+          <ownedTools xsi:type="tool:SelectionWizardDescription" name="osgi.imp.tool.AddComponent" label="Add Component" precondition="[self.oclIsTypeOf(Project)/]" forceRefresh="true" candidatesExpression="[self.oclAsType(Project).bundles.components/]" message="Select the component to add">
+            <element name="element"/>
+            <containerView name="containerView"/>
+            <container name="container"/>
+            <initialOperation>
+              <firstModelOperations xsi:type="tool:ChangeContext" browseExpression="var:element">
+                <subModelOperations xsi:type="tool:CreateView" mapping="//@ownedViewpoints[name='org.eclipselabs.osgitools.Analysis']/@ownedRepresentations[name='osgi.impactanalysis']/@defaultLayer/@nodeMappings[name='osgi.imp.component']" containerViewExpression="var:containerView"/>
+              </firstModelOperations>
+            </initialOperation>
+          </ownedTools>
+          <ownedTools xsi:type="tool:ToolDescription" name="osgi.imp.tool.AddDependencies" label="Add Dependencies" precondition="[self.oclIsKindOf(DynamicComponent)/]" forceRefresh="true">
+            <element name="element"/>
+            <elementView name="elementView"/>
+            <initialOperation>
+              <firstModelOperations xsi:type="tool:ChangeContext" browseExpression="var:element">
+                <subModelOperations xsi:type="tool:For" expression="service:getDependsOn">
+                  <subModelOperations xsi:type="tool:CreateView" mapping="//@ownedViewpoints[name='org.eclipselabs.osgitools.Analysis']/@ownedRepresentations[name='osgi.impactanalysis']/@defaultLayer/@nodeMappings[name='osgi.imp.component']" containerViewExpression="[elementView.eContainer()/]"/>
+                </subModelOperations>
+              </firstModelOperations>
+            </initialOperation>
+          </ownedTools>
+        </toolSections>
       </defaultLayer>
-      <optionalLayers name="Services">
-        <nodeMappings name="Service" semanticCandidatesExpression="feature:services" domainClass="OSGiInfrastructure.Service">
-          <style xsi:type="style:BundledImageDescription" resizeKind="NSEW" shape="dot">
-            <borderColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
-            <labelColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
-            <color xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
-          </style>
-        </nodeMappings>
-        <edgeMappings name="Provides" sourceMapping="//@ownedViewpoints[name='org.eclipselabs.osgitools.Analysis']/@ownedRepresentations[name='osgi.Infrastructure']/@defaultLayer/@containerMappings[name='Bundle']/@subNodeMappings[name='Component']" targetMapping="//@ownedViewpoints[name='org.eclipselabs.osgitools.Analysis']/@ownedRepresentations[name='osgi.Infrastructure']/@optionalLayers[name='Services']/@nodeMappings[name='Service']" targetFinderExpression="feature:provides">
-          <style lineStyle="dash" targetArrow="InputClosedArrow" sizeComputationExpression="2">
-            <strokeColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='gray']"/>
-            <centerLabelStyleDescription>
-              <labelColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
-            </centerLabelStyleDescription>
-          </style>
-        </edgeMappings>
-        <edgeMappings name="Requires" semanticCandidatesExpression="[self.bundles.components.requires/]" sourceMapping="//@ownedViewpoints[name='org.eclipselabs.osgitools.Analysis']/@ownedRepresentations[name='osgi.Infrastructure']/@defaultLayer/@containerMappings[name='Bundle']/@subNodeMappings[name='Component']" targetMapping="//@ownedViewpoints[name='org.eclipselabs.osgitools.Analysis']/@ownedRepresentations[name='osgi.Infrastructure']/@optionalLayers[name='Services']/@nodeMappings[name='Service']" targetFinderExpression="feature:reference" sourceFinderExpression="feature:eContainer" domainClass="OSGiInfrastructure.ServiceRequirement" useDomainElement="true">
-          <style sizeComputationExpression="2">
-            <strokeColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='gray']"/>
-            <centerLabelStyleDescription>
-              <labelColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
-            </centerLabelStyleDescription>
-          </style>
-        </edgeMappings>
-      </optionalLayers>
     </ownedRepresentations>
     <ownedJavaExtensions qualifiedClassName="org.eclipselabs.osgitools.design.OSGiModelService"/>
   </ownedViewpoints>
+  <userColorsPalettes name="MAM">
+    <entries xsi:type="description:UserFixedColor" red="142" green="158" blue="130" name="Strong Green"/>
+    <entries xsi:type="description:UserFixedColor" red="202" green="204" blue="182" name="Weak Green"/>
+    <entries xsi:type="description:UserFixedColor" red="242" green="240" blue="223" name="Creme"/>
+    <entries xsi:type="description:UserFixedColor" red="169" green="193" blue="217" name="Weak Blue"/>
+    <entries xsi:type="description:UserFixedColor" red="96" green="120" blue="144" name="Strong Blue"/>
+  </userColorsPalettes>
 </description:Group>
