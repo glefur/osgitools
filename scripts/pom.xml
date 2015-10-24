@@ -43,6 +43,7 @@
           <artifactId>maven-dependency-plugin</artifactId>
           <executions>
             <execution>
+              <id>Copy bin</id>
               <phase>package</phase>
               <goals>
                 <goal>copy-dependencies</goal>
@@ -51,8 +52,19 @@
                 <outputDirectory>${project.build.directory}/plugins</outputDirectory>
               </configuration>
             </execution>
+            <execution>
+              <id>Copy sources</id>
+              <phase>package</phase>
+              <goals>
+                <goal>copy-dependencies</goal>
+              </goals>
+              <configuration>
+                <classifier>sources</classifier>
+                <outputDirectory>${project.build.directory}/plugins</outputDirectory>
+              </configuration>
+            </execution>
           </executions>
         </plugin>
       </plugins>
     </build>
-</project>
+ </project>
