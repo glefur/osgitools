@@ -13,7 +13,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package fr.smartcontext.util.hibernatebundleupdater.internal.util;
+package fr.smartcontext.util.hibernatebundleupdater.internal.visitors;
 
 import static java.nio.file.FileVisitResult.CONTINUE;
 
@@ -22,12 +22,28 @@ import java.nio.file.FileVisitResult;
 import java.nio.file.Path;
 import java.nio.file.SimpleFileVisitor;
 import java.nio.file.attribute.BasicFileAttributes;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * @author <a href="mailto:goulwen.lefur@gmail.com">Goulwen Le Fur</a>.
  *
  */
-public class SJAVisitor extends SimpleFileVisitor<Path> {
+public class SourcesJarIndexer extends SimpleFileVisitor<Path> {
+	
+	public static final String SOURCES_JAR_SUFFIX = "-sources";
+	public static final String JAR_FILE_EXTENSION = "jar";
+	private static final String SOURCES_JAR_END_FILENAME = SOURCES_JAR_SUFFIX + "." + JAR_FILE_EXTENSION;
+	
+	private Map<String, Path> jars;
+
+	public SourcesJarIndexer() {
+		jars = new HashMap<>();
+	}
+	
+	public Map<String, Path> getJars() {
+		return jars;
+	}
 
 	/**
 	 * {@inheritDoc}
@@ -35,8 +51,10 @@ public class SJAVisitor extends SimpleFileVisitor<Path> {
 	 */
 	@Override
 	public FileVisitResult visitFile(Path file, BasicFileAttributes attrs) throws IOException {
-		if (file.getFileName().toString().endsWith("-sources.jar")) {
-			System.out.println(file);
+		String filename = file.getFileName().toString();
+		if (filename.endsWith(SOURCES_JAR_END_FILENAME)) {
+			String key = filename.substring(0, filename.length() - SOURCES_JAR_END_FILENAME.length());
+			jars.put(key, file);
 		} else {
 			System.err.println("Unable to process " + file);
 		}

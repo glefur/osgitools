@@ -20,22 +20,26 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
-import fr.smartcontext.util.hibernatebundleupdater.internal.util.SJAVisitor;
+import fr.smartcontext.util.hibernatebundleupdater.internal.visitors.BinJarProcessor;
+import fr.smartcontext.util.hibernatebundleupdater.internal.visitors.SourcesJarIndexer;
 
 /**
  * @author <a href="mailto:goulwen.lefur@gmail.com">Goulwen Le Fur</a>.
  *
  */
-public class SourceJarAssociator {
+public class SourcesJarAssociator {
 
 	/**
 	 * @param args
 	 */
 	public static void main(String[] args) {
-		Path startingDir = Paths.get("/home/glefur/Perso/repositories/glefur.github.io/p2/p2CoJaL/0.9.1/target/sources");
-		SJAVisitor finder = new SJAVisitor();
 		try {
-			Files.walkFileTree(startingDir, finder);
+			Path sourcesJarDir = Paths.get(args[0] + "/sources");
+			SourcesJarIndexer finder = new SourcesJarIndexer();
+			Files.walkFileTree(sourcesJarDir, finder);
+			Path binJarDir = Paths.get(args[0] + "/plugins");
+			BinJarProcessor processor = new BinJarProcessor(args[0], finder.getJars());
+			Files.walkFileTree(binJarDir, processor);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
