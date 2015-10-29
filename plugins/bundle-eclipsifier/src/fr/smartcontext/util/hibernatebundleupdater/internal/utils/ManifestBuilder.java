@@ -35,11 +35,11 @@ public class ManifestBuilder {
 		return new ManifestBuilder(srcManifest);
 	}
 
-	private Map<String, String> headers;
+	private Map<String, String> headersToAdd;
 	private Manifest srcManifest;
 	
 	private ManifestBuilder() {
-		headers = new HashMap<String, String>();
+		headersToAdd = new HashMap<String, String>();
 	}
 
 	private ManifestBuilder(Manifest srcManifest) {
@@ -48,10 +48,11 @@ public class ManifestBuilder {
 	}
 
 	public ManifestBuilder addHeader(String header, String value) {
-		headers.put(header, value);
+		headersToAdd.put(header, value);
 		return this;
 	}
 	
+
 	public Manifest build() {
 		Manifest result;
 		if (srcManifest != null) {
@@ -59,9 +60,8 @@ public class ManifestBuilder {
 		} else {
 			result = new Manifest();
 			result.getMainAttributes().putValue("Manifest-Version", "1.0");
-
 		}
-		for (Entry<String, String> entry : headers.entrySet()) {
+		for (Entry<String, String> entry : headersToAdd.entrySet()) {
 			result.getMainAttributes().putValue(entry.getKey(), entry.getValue());
 		}
 		return result;

@@ -1,6 +1,6 @@
 /**
- * OSGi/JEE Sample.
  * 
+ * OSGi/JEE Sample.
  * Copyright (C) 2014 Goulwen Le Fur
  * 
  * This program is free software: you can redistribute it and/or modify
@@ -37,15 +37,22 @@ public class BinJarProcessor extends SimpleFileVisitor<Path> {
 	
 	public static final String JAR_FILE_EXTENSION = "jar";
 	private Map<String, Path> sourcesJar;
-	private String binJarDir;
-	private Collection<Path> processedJars;
+	private String repositoryDir;
+	private Collection<String> processedJars;
 	
 	public BinJarProcessor(String args, Map<String, Path> sourcesJar) {
-		this.binJarDir = args;
+		this.repositoryDir = args;
 		this.sourcesJar = sourcesJar;
-		processedJars = new ArrayList<Path>();
+		processedJars = new ArrayList<String>();
 	}
 	
+	/**
+	 * @return the processedJars
+	 */
+	public Collection<String> getProcessedJars() {
+		return processedJars;
+	}
+
 	/**
 	 * {@inheritDoc}
 	 * @see java.nio.file.SimpleFileVisitor#visitFile(java.lang.Object, java.nio.file.attribute.BasicFileAttributes)
@@ -57,9 +64,9 @@ public class BinJarProcessor extends SimpleFileVisitor<Path> {
 			String key = filename.substring(0, filename.length() - (JAR_FILE_EXTENSION.length() + 1));
 			Path path = sourcesJar.get(key);
 			if (path != null) {
-				BundleHandler binJarHandler = new BundleHandler(binJarDir + "/plugins/" + filename);
+				BundleHandler binJarHandler = new BundleHandler(repositoryDir + "/plugins/" + filename);
 				if (binJarHandler.isOSGiBundle()) {
-					BundleHandler srcJarHandler = new BundleHandler(binJarDir + "/sources/" + path.getFileName().toString());
+					BundleHandler srcJarHandler = new BundleHandler(repositoryDir + "/sources/" + path.getFileName().toString());
 					ManifestBuilder builder = ManifestBuilder.newInstance(srcJarHandler.getManifest());
 					for (String header : binJarHandler.getHeaders()) {
 						if (header.startsWith("Bundle-")) {
@@ -74,7 +81,7 @@ public class BinJarProcessor extends SimpleFileVisitor<Path> {
 					}
 					builder.addHeader("Eclipse-SourceBundle", binJarHandler.getHeader("Bundle-SymbolicName") + ";version=\"" + binJarHandler.getHeader("Bundle-Version") + "\";roots:=\".\"");
 					srcJarHandler.updateManifest(builder.build());
-//					processedJars.add(e)
+					processedJars.add(path.getFileName().toString());
 				} else {
 					System.err.println("Unable to process " + file);
 				}

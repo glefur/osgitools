@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<launchConfiguration type="org.eclipse.jdt.launching.localJavaApplication">
+<listAttribute key="org.eclipse.debug.core.MAPPED_RESOURCE_PATHS">
+<listEntry value="/bundle-handler/src/fr/smartcontext/util/hibernatebundleupdater/BundleHandlerApplication.java"/>
+</listAttribute>
+<listAttribute key="org.eclipse.debug.core.MAPPED_RESOURCE_TYPES">
+<listEntry value="1"/>
+</listAttribute>
+<stringAttribute key="org.eclipse.jdt.launching.MAIN_TYPE" value="fr.smartcontext.util.hibernatebundleupdater.BundleHandlerApplication"/>
+<stringAttribute key="org.eclipse.jdt.launching.PROGRAM_ARGUMENTS" value="eclipsifyHibernateBundle /home/glefur/Perso/repositories/glefur.github.io/p2/p2CoJaL/0.9.1/target/ hibernate-core-4.2.7.Final.jar"/>
+<stringAttribute key="org.eclipse.jdt.launching.PROJECT_ATTR" value="bundle-handler"/>
+</launchConfiguration>
