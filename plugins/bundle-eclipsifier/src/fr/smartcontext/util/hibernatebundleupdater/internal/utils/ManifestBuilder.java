@@ -58,6 +58,8 @@ public class ManifestBuilder {
 			result = new Manifest(srcManifest);
 		} else {
 			result = new Manifest();
+			result.getMainAttributes().putValue("Manifest-Version", "1.0");
+
 		}
 		for (Entry<String, String> entry : headers.entrySet()) {
 			result.getMainAttributes().putValue(entry.getKey(), entry.getValue());

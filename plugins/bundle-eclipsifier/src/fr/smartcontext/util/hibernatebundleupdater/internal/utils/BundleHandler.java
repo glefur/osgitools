@@ -60,6 +60,10 @@ public class BundleHandler {
 		return getHeader(BUNDLE_SYMBOLIC_NAME_HEADER) != null;
 	}
 	
+	public Manifest getManifest() {
+		return manifest;
+	}
+
 	public String getHeader(String header) {
 		return manifest.getMainAttributes().getValue(header);
 	}
@@ -86,7 +90,6 @@ public class BundleHandler {
 		File newFile = File.createTempFile("updatedMANIFEST", ".MF");
 		OutputStream outputStream = new BufferedOutputStream(new FileOutputStream(newFile));
 		newManifest.write(outputStream);
-		System.out.println("Done.");
 		outputStream.close();
 		return newFile;
 	}

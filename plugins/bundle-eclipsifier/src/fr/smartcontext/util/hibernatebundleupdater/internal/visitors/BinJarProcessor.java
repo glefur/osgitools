@@ -22,6 +22,8 @@ import java.nio.file.FileVisitResult;
 import java.nio.file.Path;
 import java.nio.file.SimpleFileVisitor;
 import java.nio.file.attribute.BasicFileAttributes;
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Map;
 
 import fr.smartcontext.util.hibernatebundleupdater.internal.utils.BundleHandler;
@@ -36,10 +38,12 @@ public class BinJarProcessor extends SimpleFileVisitor<Path> {
 	public static final String JAR_FILE_EXTENSION = "jar";
 	private Map<String, Path> sourcesJar;
 	private String binJarDir;
+	private Collection<Path> processedJars;
 	
 	public BinJarProcessor(String args, Map<String, Path> sourcesJar) {
 		this.binJarDir = args;
 		this.sourcesJar = sourcesJar;
+		processedJars = new ArrayList<Path>();
 	}
 	
 	/**
@@ -56,13 +60,21 @@ public class BinJarProcessor extends SimpleFileVisitor<Path> {
 				BundleHandler binJarHandler = new BundleHandler(binJarDir + "/plugins/" + filename);
 				if (binJarHandler.isOSGiBundle()) {
 					BundleHandler srcJarHandler = new BundleHandler(binJarDir + "/sources/" + path.getFileName().toString());
-					ManifestBuilder builder = ManifestBuilder.newInstance();
+					ManifestBuilder builder = ManifestBuilder.newInstance(srcJarHandler.getManifest());
 					for (String header : binJarHandler.getHeaders()) {
 						if (header.startsWith("Bundle-")) {
-							builder.addHeader(header, binJarHandler.getHeader(header));
+							if ("Bundle-SymbolicName".equals(header)) {
+								builder.addHeader(header, binJarHandler.getHeader(header) + "-sources");
+							} else if ("Bundle-Name".equals(header)) {
+								builder.addHeader(header, "Sources for " + binJarHandler.getHeader(header));								
+							} else {
+								builder.addHeader(header, binJarHandler.getHeader(header));
+							}
 						}
 					}
+					builder.addHeader("Eclipse-SourceBundle", binJarHandler.getHeader("Bundle-SymbolicName") + ";version=\"" + binJarHandler.getHeader("Bundle-Version") + "\";roots:=\".\"");
 					srcJarHandler.updateManifest(builder.build());
+//					processedJars.add(e)
 				} else {
 					System.err.println("Unable to process " + file);
 				}
