@@ -71,7 +71,8 @@ public class BinJarProcessor extends SimpleFileVisitor<Path> {
 					for (String header : binJarHandler.getHeaders()) {
 						if (header.startsWith("Bundle-")) {
 							if ("Bundle-SymbolicName".equals(header)) {
-								builder.addHeader(header, binJarHandler.getHeader(header) + "-sources");
+								String headerValue = binJarHandler.getHeader(header);
+								builder.addHeader(header, generateNewBundleSymbolicName(headerValue));
 							} else if ("Bundle-Name".equals(header)) {
 								builder.addHeader(header, "Sources for " + binJarHandler.getHeader(header));								
 							} else {
@@ -83,15 +84,23 @@ public class BinJarProcessor extends SimpleFileVisitor<Path> {
 					srcJarHandler.updateManifest(builder.build());
 					processedJars.add(path.getFileName().toString());
 				} else {
-					System.err.println("Unable to process " + file);
+					System.err.println("Unable to process " + file + ". This jar isn't an OSGi bundle");
 				}
 			} else {
 				System.out.println("No sources for " + file);
 			}
-		} else {
-			System.err.println("Unable to process " + file);
-		}
+		} 
 		return CONTINUE;
+	}
+
+	private String generateNewBundleSymbolicName(String headerValue) {
+		if (headerValue.indexOf(';') < 0) {
+			return headerValue + ".source";
+		} else {
+			String symbolicName = headerValue.substring(0, headerValue.indexOf(';'));
+			String directives = headerValue.substring(headerValue.indexOf(';'), headerValue.length());
+			return symbolicName + ".source" + directives;
+		}
 	}
 
 }
