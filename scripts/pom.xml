@@ -12,7 +12,7 @@
           <executions>
             <execution>
               <id>Copy bin</id>
-              <phase>package</phase>
+              <phase>compile</phase>
               <goals>
                 <goal>copy-dependencies</goal>
               </goals>
@@ -22,7 +22,7 @@
             </execution>
             <execution>
               <id>Copy sources</id>
-              <phase>package</phase>
+              <phase>compile</phase>
               <goals>
                 <goal>copy-dependencies</goal>
               </goals>
@@ -30,6 +30,20 @@
                 <classifier>sources</classifier>
                 <outputDirectory>${project.build.directory}/sources</outputDirectory>
               </configuration>
+            </execution>
+          </executions>
+        </plugin>
+        <plugin>
+          <groupId>fr.smartcontext</groupId>
+          <artifactId>bundle-processor-plugin</artifactId>
+          <version>0.9.0-SNAPSHOT</version>
+          <executions>
+             <execution>
+              <id>Associate sources bundles</id>
+              <phase>integration-test</phase>
+              <goals>
+                <goal>associateSourcesBundles</goal>
+              </goals>
             </execution>
           </executions>
         </plugin>
