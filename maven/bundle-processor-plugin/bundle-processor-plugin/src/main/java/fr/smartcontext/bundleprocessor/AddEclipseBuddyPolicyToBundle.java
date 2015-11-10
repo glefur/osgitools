@@ -38,7 +38,7 @@ public class AddEclipseBuddyPolicyToBundle extends AbstractMojo {
 	private static final String ECLIPSE_BUDDY_POLICY_MANIFEST_ENTRY = "Eclipse-BuddyPolicy";
 	private static final String ECLIPSE_BUDDY_POLICY_MANIFEST_VALUE = "registered";
 
-	@Parameter(defaultValue = "${project.build.directory}", property = "repositoryPath", required = true)
+	@Parameter(defaultValue = "${project.build.directory}" + "/plugins/", property = "repositoryPath", required = true)
 	private String repositoryPath;
 
 	@Parameter(property = "bundleFilename", required = true)
@@ -48,7 +48,7 @@ public class AddEclipseBuddyPolicyToBundle extends AbstractMojo {
 		BundleHandler handler;
 		getLog().info("Processing " + bundleFilename + " in repository " + repositoryPath);
 		try {
-			handler = new BundleHandler(repositoryPath + "/plugins/" + bundleFilename);
+			handler = new BundleHandler(repositoryPath + (repositoryPath.endsWith("/")?"":"/") + bundleFilename);
 			handler.updateManifest(ManifestBuilder.newInstance(handler.getManifest())
 					.addHeader(BUNDLE_SYMBOLIC_NAME_MANIFEST_ENTRY, handler.getHeader(BUNDLE_SYMBOLIC_NAME_MANIFEST_ENTRY) + BUNDLE_NEW_SUFFIX)
 					.addHeader(ECLIPSE_BUDDY_POLICY_MANIFEST_ENTRY, ECLIPSE_BUDDY_POLICY_MANIFEST_VALUE)
