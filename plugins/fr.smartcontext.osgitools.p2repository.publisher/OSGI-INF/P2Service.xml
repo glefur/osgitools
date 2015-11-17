@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<scr:component xmlns:scr="http://www.osgi.org/xmlns/scr/v1.1.0" name="fr.smartcontext.osgitools.p2repository.publisher.p2.P2Service">
+   <implementation class="fr.smartcontext.osgitools.p2repository.publisher.internal.p2.P2ServiceImpl"/>
+   <service>
+      <provide interface="fr.smartcontext.osgitools.p2repository.publisher.p2.P2Service"/>
+   </service>
+</scr:component>

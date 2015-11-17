@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<scr:component xmlns:scr="http://www.osgi.org/xmlns/scr/v1.1.0" name="fr.smartcontext.osgitools.p2repository.publisher.template.TemplateProcessor">
+   <implementation class="fr.smartcontext.osgitools.p2repository.publisher.internal.template.TemplateProcessorImpl"/>
+   <service>
+      <provide interface="fr.smartcontext.osgitools.p2repository.publisher.template.TemplateProcessor"/>
+   </service>
+   <reference bind="setCommandFactory" cardinality="1..1" interface="fr.smartcontext.osgitools.p2repository.publisher.template.commands.CommandFactory" name="CommandFactory" policy="static"/>
+</scr:component>
