@@ -10,6 +10,6 @@ Import-Package: org.eclipse.equinox.p2.core,
  org.eclipse.equinox.p2.metadata;version="2.1.0",
  org.eclipse.equinox.p2.query;version="2.0.0",
  org.eclipse.equinox.p2.repository.metadata;version="2.0.0"
-Service-Component: OSGI-INF/P2Service.xml,OSGI-INF/TemplateProcessor.xml,
- OSGI-INF/CommandFactory.xml
+Service-Component: OSGI-INF/P2Service.xml,OSGI-INF/TemplateProcessor.xml,OSGI-INF/CommandFactory.xml,
+ OSGI-INF/ContextInitialize.xml
 Bundle-ActivationPolicy: lazy

@@ -3,25 +3,19 @@ package fr.smartcontext.osgitools.p2repository.publisher;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.PrintWriter;
-import java.net.URI;
 import java.nio.file.Paths;
+import java.util.HashMap;
+import java.util.Map;
 
-import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.equinox.app.IApplication;
 import org.eclipse.equinox.app.IApplicationContext;
-import org.eclipse.equinox.p2.core.IProvisioningAgent;
-import org.eclipse.equinox.p2.metadata.IInstallableUnit;
-import org.eclipse.equinox.p2.query.IQueryResult;
-import org.eclipse.equinox.p2.query.QueryUtil;
-import org.eclipse.equinox.p2.repository.metadata.IMetadataRepository;
 import org.osgi.framework.Bundle;
+import org.osgi.framework.BundleContext;
 import org.osgi.framework.FrameworkUtil;
 import org.osgi.framework.ServiceReference;
 
-import fr.smartcontext.osgitools.p2repository.publisher.internal.data.Artifact;
-import fr.smartcontext.osgitools.p2repository.publisher.internal.data.P2Repository;
-import fr.smartcontext.osgitools.p2repository.publisher.internal.template.ProcessingContextImpl;
-import fr.smartcontext.osgitools.p2repository.publisher.p2.P2Service;
+import fr.smartcontext.osgitools.p2repository.publisher.template.ContextInitializer;
+import fr.smartcontext.osgitools.p2repository.publisher.template.ProcessingContext;
 import fr.smartcontext.osgitools.p2repository.publisher.template.TemplateProcessor;
 
 /**
@@ -36,31 +30,40 @@ public class Application implements IApplication {
 	 */
 	public Object start(IApplicationContext context) throws Exception {
 		applicationBundle = FrameworkUtil.getBundle(Application.class);
-		ServiceReference<P2Service> p2ServiceRef = applicationBundle.getBundleContext().getServiceReference(P2Service.class);
-		P2Service p2Service = applicationBundle.getBundleContext().getService(p2ServiceRef);
-		IProvisioningAgent p2Agent = p2Service.setupAgent(applicationBundle.getBundleContext(), new URI("file:/home/glefur/Perso/Softwares/eclipses/mars-osgi-jee/p2/"));
-		IMetadataRepository repository = p2Service.loadRepository(p2Agent, new URI("file:/home/glefur/Perso/repositories/glefur.github.io/p2/p2CoJaL/0.9.1/repository"));
-		IQueryResult<IInstallableUnit> query = repository.query(QueryUtil.createIUAnyQuery(), new NullProgressMonitor());
-
-		P2Repository repo = new P2Repository("p2CoJaL", "0.9.1");
+		BundleContext bundleContext = applicationBundle.getBundleContext();
 		
-		for (IInstallableUnit unit : query) {
-			Artifact artifact = new Artifact(unit.getId(), unit.getVersion().toString(), (String)unit.getProperty(IInstallableUnit.PROP_NAME), (String)unit.getProperty(IInstallableUnit.PROP_DESCRIPTION));
-			repo.addArtifact(artifact);
-		}
+		Map<String, String> applicationParameters = prepareParams(context);
 		
-		ServiceReference<TemplateProcessor> templateProcessorRef = applicationBundle.getBundleContext().getServiceReference(TemplateProcessor.class);
-		TemplateProcessor templateProcessor = applicationBundle.getBundleContext().getService(templateProcessorRef);
+		ServiceReference<ContextInitializer> ciRef = bundleContext.getServiceReference(ContextInitializer.class);
+		ContextInitializer contextInitializer = bundleContext.getService(ciRef);
+		
+		ProcessingContext processingContext = contextInitializer.initContext(bundleContext, applicationParameters);
+		
+		ServiceReference<TemplateProcessor> templateProcessorRef = bundleContext.getServiceReference(TemplateProcessor.class);
+		TemplateProcessor templateProcessor = bundleContext.getService(templateProcessorRef);
 		
 		PrintWriter fos = new PrintWriter(new FileOutputStream(new File("/home/glefur/Perso/repositories/glefur.github.io/repo.html")));
 
-		ProcessingContextImpl processingContext = new ProcessingContextImpl(applicationBundle.getBundleContext());
-		processingContext.setVar("repo", repo);
 		
 		templateProcessor.process(Paths.get("/home/glefur/Perso/repositories/glefur.github.io/template.gtp"), processingContext, fos);
 		
 		fos.close();
 		return IApplication.EXIT_OK;
+	}
+
+	/**
+	 * @param context
+	 * @return
+	 */
+	private Map<String, String> prepareParams(IApplicationContext context) {
+		Map<String, String> applicationParameters = new HashMap<>();
+		String[] params = (String[]) context.getArguments().get("application.args");
+		for (String param : params) {
+			if (param.indexOf('=') > 0) {
+				applicationParameters.put(param.substring(0, param.indexOf('=')), param.substring(param.indexOf('=') + 1));
+			}
+		}
+		return applicationParameters;
 	}
 
 	/* (non-Javadoc)
