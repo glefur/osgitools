@@ -2,6 +2,6 @@
 <scr:component xmlns:scr="http://www.osgi.org/xmlns/scr/v1.1.0" name="fr.smartcontext.osgitools.p2repository.publisher.template.ContextInitializer">
    <implementation class="fr.smartcontext.osgitools.p2repository.publisher.internal.template.ContextInitializeImpl"/>
    <service>
-      <provide interface="fr.smartcontext.osgitools.p2repository.publisher.template.ContextInitializer"/>
+      <provide interface="fr.smartcontext.yatte.engine.ContextInitializer"/>
    </service>
 </scr:component>

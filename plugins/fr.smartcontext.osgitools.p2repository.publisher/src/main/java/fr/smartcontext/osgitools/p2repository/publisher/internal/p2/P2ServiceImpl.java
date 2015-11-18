@@ -33,7 +33,7 @@ public class P2ServiceImpl implements P2Service {
 
 	/**
 	 * {@inheritDoc}
-	 * @see fr.smartcontext.osgitools.p2repository.publisher.p2.P2Service#setupAgent(java.net.URI)
+	 * @see fr.smartcontext.yatte.p2.P2Service#setupAgent(java.net.URI)
 	 */
 	@Override
 	public IProvisioningAgent setupAgent(BundleContext bundleContext, URI location) throws ProvisionException {
@@ -56,7 +56,7 @@ public class P2ServiceImpl implements P2Service {
 
 	/**
 	 * {@inheritDoc}
-	 * @see fr.smartcontext.osgitools.p2repository.publisher.p2.P2Service#loadRepository(org.eclipse.equinox.p2.core.IProvisioningAgent, java.net.URI)
+	 * @see fr.smartcontext.yatte.p2.P2Service#loadRepository(org.eclipse.equinox.p2.core.IProvisioningAgent, java.net.URI)
 	 */
 	@Override
 	public IMetadataRepository loadRepository(IProvisioningAgent agent, URI repositoryLocation) throws ProvisionException, OperationCanceledException {

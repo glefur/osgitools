@@ -8,24 +8,17 @@
  * Contributors:
  *     Obeo - initial API and implementation
  *******************************************************************************/
-package fr.smartcontext.osgitools.p2repository.publisher.template.commands;
-
-import java.util.Map;
-
-import fr.smartcontext.osgitools.p2repository.publisher.template.ProcessingContext;
+package fr.smartcontext.osgitools.p2repository.publisher;
 
 /**
  * @author <a href="mailto:goulwen.lefur@gmail.com">Goulwen Le Fur</a>
  *
  */
-public abstract class Command {
-	
-	protected final Map<String, String> parameters;
+public interface ApplicationParametersConstants {
 
-	public Command(Map<String, String> parameters) {
-		this.parameters = parameters;
-	}
+	String PROPERTIES_PATH_OPTION_NAME = "p";
+	String PROPERTIES_PATH_OPTION_LONG_NAME = "properties-path";
+	String PROPERTIES_PATH_OPTION_DESCRIPTION = "Path of the properties file to use to init the processing context";
+	String PROPERTIES_PATH_OPTION_ARGUMENT_NAME = "properties";
 
-	public abstract String execute(ProcessingContext context);
-	
 }

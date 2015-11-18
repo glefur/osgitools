@@ -21,16 +21,25 @@ public class P2Repository {
 
 	private String name;
 	private String version;
+	private String description;
 	private List<Artifact> artifacts;
 	
+	/**
+	 * 
+	 */
+	public P2Repository() {
+		this.artifacts = new ArrayList<>();
+	}
+
 	/**
 	 * @param name
 	 * @param version
 	 */
-	public P2Repository(String name, String version) {
+	public P2Repository(String name, String version, String description) {
+		this();
 		this.name = name;
 		this.version = version;
-		this.artifacts = new ArrayList<>();
+		this.description = description;
 	}
 
 	/**
@@ -45,6 +54,13 @@ public class P2Repository {
 	 */
 	public String getVersion() {
 		return version;
+	}
+
+	/**
+	 * @return the description
+	 */
+	public String getDescription() {
+		return description;
 	}
 
 	/**
