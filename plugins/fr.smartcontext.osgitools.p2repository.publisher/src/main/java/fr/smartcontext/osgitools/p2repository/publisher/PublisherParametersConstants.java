@@ -14,11 +14,15 @@ package fr.smartcontext.osgitools.p2repository.publisher;
  * @author <a href="mailto:goulwen.lefur@gmail.com">Goulwen Le Fur</a>
  *
  */
-public interface ApplicationParametersConstants {
+public interface PublisherParametersConstants {
 
-	String PROPERTIES_PATH_OPTION_NAME = "p";
-	String PROPERTIES_PATH_OPTION_LONG_NAME = "properties-path";
-	String PROPERTIES_PATH_OPTION_DESCRIPTION = "Path of the properties file to use to init the processing context";
-	String PROPERTIES_PATH_OPTION_ARGUMENT_NAME = "properties";
+	String AGENT_OPTION_NAME = "a";
+	String AGENT_OPTION_LONG_NAME = "p2-agent";
+	String AGENT_OPTION_DESCRIPTION = "Path of p2 agent to use for browsing the repository";
+	String AGENT_OPTION_ARGUMENT_NAME = "agent";
 
+	String REPOSITORY_OPTION_NAME = "r";
+	String REPOSITORY_OPTION_LONG_NAME = "p2-repository";
+	String REPOSITORY_OPTION_DESCRIPTION = "Path of p2 repository to publish";
+	String REPOSITORY_OPTION_ARGUMENT_NAME = "repo";
 }
