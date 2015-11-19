@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+
+   <extension
+         id="publisher"
+         point="org.eclipse.core.runtime.products">
+      <product
+            application="fr.smartcontext.osgitools.p2repository.publisher.application"
+            name="PublisherProduct">
+         <property
+               name="appName"
+               value="PublisherProduct">
+         </property>
+      </product>
+   </extension>
+
+</plugin>

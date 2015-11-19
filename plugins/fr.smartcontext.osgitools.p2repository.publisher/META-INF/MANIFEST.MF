@@ -2,8 +2,8 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: p2 repository publisher
 Bundle-SymbolicName: fr.smartcontext.osgitools.p2repository.publisher;singleton:=true
-Bundle-Version: 1.0.0.qualifier
-Bundle-Vendor: SmartContest
+Bundle-Version: 0.9.0.qualifier
+Bundle-Vendor: SmartContext
 Require-Bundle: org.eclipse.core.runtime
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Import-Package: fr.smartcontext.yatte.application,

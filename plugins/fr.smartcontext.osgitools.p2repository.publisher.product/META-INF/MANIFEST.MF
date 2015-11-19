@@ -1,0 +1,7 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: P2 Repository Publisher Product
+Bundle-SymbolicName: fr.smartcontext.osgitools.p2repository.publisher.product;singleton:=true
+Bundle-Version: 0.0.0.qualifier
+Bundle-Vendor: SmartContext
+Bundle-RequiredExecutionEnvironment: JavaSE-1.8

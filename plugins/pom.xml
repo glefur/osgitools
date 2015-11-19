@@ -1,0 +1,17 @@
+<project>
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>fr.smartcontext</groupId>
+    <artifactId>p2repo.publisher.aggregator</artifactId>
+    <version>0.9.0-SNAPSHOT</version>
+    <packaging>pom</packaging>
+    
+    <modules>
+        <module>../../yatte/environment/fr.smartcontext.yatte.environment</module>
+        <module>../../yatte/bundles/fr.smartcontext.yatte.engine</module>
+        <module>../../yatte/bundles/fr.smartcontext.yatte.application</module>
+        <module>fr.smartcontext.osgitools.p2repository.publisher</module>
+        <module>fr.smartcontext.osgitools.p2repository.publisher.product</module>
+    </modules>
+</project> 
+
+
