@@ -1,0 +1,10 @@
+target "Target Platform for p2repoPublisher"
+
+include "file:/home/glefur/repositories/yatte/environment/fr.smartcontext.yatte.environment/yatte-target.tpd"
+
+with source, requirements
+
+location eclipse "http://download.eclipse.org/eclipse/updates/4.5" {
+	org.eclipse.equinox.p2.metadata.repository
+}
+
