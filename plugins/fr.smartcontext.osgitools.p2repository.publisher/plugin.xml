@@ -11,4 +11,12 @@
          </run>
       </application>
    </extension>
+   <extension
+         id="publisher"
+         point="org.eclipse.core.runtime.products">
+      <product
+            application="fr.smartcontext.osgitools.p2repository.publisher.application"
+            name="PublisherProduct">
+      </product>
+   </extension>
 </plugin>
