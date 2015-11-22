@@ -45,7 +45,14 @@ public class ContextInitializeImpl extends PropertiesContextInitializer {
 		ServiceReference<P2Service> p2ServiceRef = bundleContext.getServiceReference(P2Service.class);
 		P2Service p2Service = bundleContext.getService(p2ServiceRef);
 		IProvisioningAgent p2Agent = p2Service.setupAgent(bundleContext, new URI("file:" + cmdLine.getOptionValue(PublisherParametersConstants.AGENT_OPTION_NAME)));
-		IMetadataRepository repository = p2Service.loadRepository(p2Agent, new URI("file:" + cmdLine.getOptionValue(PublisherParametersConstants.REPOSITORY_OPTION_NAME)));
+		String repositoryPath = cmdLine.getOptionValue(PublisherParametersConstants.REPOSITORY_OPTION_NAME);
+		URI repoURI;
+		if (repositoryPath.startsWith("http://") || repositoryPath.startsWith("https://")) {
+			repoURI = new URI(repositoryPath);			
+		} else {
+			repoURI = new URI("file:" + repositoryPath);
+		}
+		IMetadataRepository repository = p2Service.loadRepository(p2Agent, repoURI);
 		IQueryResult<IInstallableUnit> query = repository.query(QueryUtil.createIUAnyQuery(), new NullProgressMonitor());
 		P2Repository repo = (P2Repository) processingContext.getVar("repo");
 		for (IInstallableUnit unit : query) {
