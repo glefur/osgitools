@@ -6,9 +6,6 @@
     <packaging>pom</packaging>
     
     <modules>
-        <module>../</module>
-        <module>../../../../yatte/bundles/fr.smartcontext.yatte.engine</module>
-        <module>../../../../yatte/bundles/fr.smartcontext.yatte.application</module>
         <module>../../../plugins/fr.smartcontext.osgitools.p2repository.publisher</module>
         <module>../../../plugins/fr.smartcontext.osgitools.p2repository.publisher.product</module>
     </modules>

@@ -1,6 +1,6 @@
 target "Target Platform for p2repoPublisher"
 
-include "file:/home/glefur/repositories/yatte/environment/fr.smartcontext.yatte.environment/yatte-target.tpd"
+include "file:/home/shared/Perso/repositories/yatte/environment/fr.smartcontext.yatte.environment/yatte-target.tpd"
 
 with source, requirements
 

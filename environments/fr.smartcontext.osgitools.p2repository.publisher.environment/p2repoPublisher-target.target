@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <?pde?>
 <!-- generated with https://github.com/mbarbero/fr.obeo.releng.targetplatform -->
-<target name="Target Platform for p2repoPublisher" sequenceNumber="1448227702">
+<target name="Target Platform for p2repoPublisher" sequenceNumber="1448297157">
   <locations>
     <location includeMode="planner" includeAllPlatforms="false" includeSource="true" includeConfigurePhase="false" type="InstallableUnit">
       <repository id="mars" location="http://download.eclipse.org/releases/mars/"/>
