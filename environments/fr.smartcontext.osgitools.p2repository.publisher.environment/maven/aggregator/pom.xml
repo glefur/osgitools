@@ -6,8 +6,9 @@
     <packaging>pom</packaging>
     
     <modules>
-        <module>../../../plugins/fr.smartcontext.osgitools.p2repository.publisher</module>
-        <module>../../../plugins/fr.smartcontext.osgitools.p2repository.publisher.product</module>
+    	<module>../../</module>
+        <module>../../../../plugins/fr.smartcontext.osgitools.p2repository.publisher</module>
+        <module>../../../../plugins/fr.smartcontext.osgitools.p2repository.publisher.product</module>
     </modules>
 </project> 
 
