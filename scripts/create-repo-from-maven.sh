@@ -12,6 +12,7 @@ function usage() {
   echo ""
   echo "Options:"
   echo "  -p path     : path to a directory containing a p2repoPublisher. If this option is set, the publisher will be called to publish an index of all the bundles included in the repository."
+  echo "  -g path     : path of the template to use with the publisher to create the repository index file."
   echo "  -t path     : path where the repository must be created."
   echo "  -h          : displays this help."
   echo ""
@@ -19,7 +20,7 @@ function usage() {
 
 HERE=`pwd`
 
-while getopts ":ha:p:t:" opt; do
+while getopts ":ha:p:g:t:" opt; do
   case "$opt" in
     h)
       usage
@@ -28,6 +29,7 @@ while getopts ":ha:p:t:" opt; do
     a) P2AGENT=$OPTARG ;;
     t) TARGET=$OPTARG ;;
     p) PUBLISHER=$OPTARG ;;
+    g) TEMPLATE=$OPTARG ;;
   esac
 done
 shift $(( OPTIND - 1 ))
@@ -50,7 +52,12 @@ buildRepository $P2AGENT $SOURCE/target/ $SOURCE/repository
 
 if [ -v PUBLISHER ];
 then
-$PUBLISHER/p2repoPublisher -a $P2AGENT -t /home/glefur/repositories/glefur.github.io/template.gtp -p $SOURCE/repository.properties -r $SOURCE/repository -o $SOURCE/repository/index.html
+  if [ -v TEMPLATE ];
+  then
+    $PUBLISHER/p2repoPublisher -a $P2AGENT -t $TEMPLATE -p $SOURCE/repository.properties -r $SOURCE/repository -o $SOURCE/repository/index.html
+  else
+    echo "No template specified for publisher. Use -g flag to specify a flag. No publication will be performed.";
+  fi
 fi
 
 
