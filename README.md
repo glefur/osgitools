@@ -4,13 +4,13 @@
 
 This repository hosts a set of tools easing the OSGi development. 
 
-These tools are used to create the p2CoJaL repository so an example of usage of those can be found in the associated github repository: https://github.com/glefur/p2CoJaL .
+Those tools are used to create the p2CoJaL repository. Check out the associated github repository: https://github.com/glefur/p2CoJaL to get an example of their use.
 
 ## Shell scripts
 
 ### create-repo-from-maven
 
-This script uses a list of maven dependencies to generate a P2 repository. Here is an example pom.xml file for this:
+This script uses a list of maven dependencies to generate a P2 repository. Here is an example pom.xml to create for this use:
 
 ```xml
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -46,13 +46,15 @@ Notice that the pom.xml should use the artifact `fr.smartcontext:dependencies-do
 Once this file defined, the shell script can be invoked with the following syntax:
 
 ```
-./create-repo-from-maven -a /path/to/eclipse [-t /path/to/target/directory] /path/to/src/directory/
+./create-repo-from-maven.sh -a /path/to/eclipse [-t /path/to/target/directory -p /path/to/a/p2repoPublisher -g /path/to/a/publishing/template] /path/to/src/directory/
 
 ```
 
-The *-a* argument define the p2 agent to use. You can either use a standard eclipse installation (since version 3.4) or a tool like p2-admin (https://github.com/mbarbero/p2-admin) for this. The argument should refer to the root directory of the p2 agent.
+The *-a* argument defines the p2 agent to use. You can either use a standard eclipse installation (since version 3.4) or a tool like p2-admin (https://github.com/mbarbero/p2-admin) for this. The argument should refer to the root directory of the p2 agent.
 
 The optional *-t* argument define the directory where the repository must be created. If this argument is used, the repository will be located at */path/of/the/target/argument/repository* otherwise it will be located at */path/to/the/pomfile/repository*.
+
+The optional *-p* and *-g* arguments enable (if they are set) a publishing operation. the *-p* argument should point on a p2repoPublisher application (see Eclipse tools: p2repoPublisher section) and the *-g* should point on a template to use with the p2repoPublisher. Note that, in case of use of the *-p* parameter, the *-g* parameter must be defined, otherwise no publishing would be executed. Once the repository built, the p2repoPublisher pointed will be invoked with the specified template to generate a webpage describing the repository. In order to set up properties for this publishing, a *repo.properties* file can be set next to the pom.xml describing the repository.
 
 Finally, the trailing argument should refer to the directory containing the *pom.xml* file listing the expected bundles.
 
@@ -73,14 +75,14 @@ This script builds a P2 repository including bundles (and optionally features) s
     - ...
   - category.xml
 
-Note that features and category.xml files is optional. Once the directory organized in this way, the shell script can be invoked with the following syntax:
+Note that features and category.xml files are optional. Once the directory organized in this way, the shell script can be invoked with the following syntax:
 
 ```
 ./create-repo-from-fs.sh -a /path/to/eclipse [-t /path/to/target/directory] /path/to/src/directory/
 ```
-The *-a* argument define the p2 agent to use. You can either use a standard eclipse installation (since version 3.4) or a tool like p2-admin (https://github.com/mbarbero/p2-admin) for this. The argument should refer to the root directory of the p2 agent.
+The *-a* argument defines the p2 agent to use. You can either use a standard eclipse installation (since version 3.4) or a tool like p2-admin (https://github.com/mbarbero/p2-admin) for this. The argument should refer to the root directory of the p2 agent.
 
-The optional *-t* argument define the directory where the repository must be created. If this argument is used, the repository will be located at */path/of/the/target/argument/repository* otherwise it will be located at */path/to/the/pomfile/repository*.
+The optional *-t* argument defines the directory where the repository must be created. If this argument is used, the repository will be located at */path/of/the/target/argument/repository* otherwise it will be located at */path/to/the/pomfile/repository*.
 
 Finally, the trailing argument should refer to the directory containing the bundles and the features expected in the target repository.
 
@@ -96,8 +98,8 @@ This goal adds a Eclipse specific header to the MANIFEST of a given bundle. This
 ```
 Eclipse-BuddyPolicy: registered
 ```
-It allows equinox (the Eclipse powered OSGi bundle) to performed specific operations from the modified bundle's classpath. This modification is especially usefull for some framework like hibernate.
-During the goal execute, the maven plugin also add the suffix ".eclipse" to the symbolic name of the modified bundle. This mark the bundle has modified.
+It allows equinox (the Eclipse powered OSGi bundle) to performed specific operations from the modified bundle's classpath. This modification is useful in some frameworks like Hibernate.
+During the goal execution, the maven plugin will also add the suffix ".eclipse" to the symbolic name of the modified bundle. This is done to mark the bundle as *modified*.
 
 Parameters of this goal are:
 
@@ -143,9 +145,9 @@ or defined in a pom.xml file:
 The default execution phase for this goal is `LifecyclePhase.INTEGRATION_TEST`.
 
 #### Goal *associateSourcesBundles*
-This goal look for source jars in a given directory and try to associate them to existing (binary) bundles in another directory. It is especially usefull when you download sources jar of framework with maven and you want to convert them in source bundles for Eclipse.
+This goal looks for source jars in a given directory and try to associate them to existing (binary) bundles in another directory. It is useful when you download sources jar of a framework with maven and you want to convert them in source bundles for Eclipse.
 
-The association between the source jar and the binary bundle is made via a naming convention (the source jar should have the same name that the jar host the OSGi bundle suffixed by '-sources'). The goal converts the source jar in OSGi Bundle by populating its MANIFEST.MF file with headers coming from the binary bundle. Only the *Bundle-SymbolicName* and the *Bundle-Description* are changed to avoid conflict and to explicit the 'source nature' of the bundle. Once the modification done, the source bundles are move in the same directory than the binary bundle (in order to prepare the creation of a P2 repository).
+The association between the source jars and the binary bundles is done via a naming convention (the source jar should have the same name that the jar host the OSGi bundle suffixed by '-sources'). The goal converts the source jar in OSGi Bundle by populating its MANIFEST.MF file with headers coming from the binary bundle. Only the *Bundle-SymbolicName* and the *Bundle-Description* are changed to avoid conflict and to explicit the 'source nature' of the bundle. Once the modification done, the source bundles are moved in the same directory than the binary bundle (in order to prepare the creation of a P2 repository).
 
 The only parameter of this goal is:
 - repositoryPath (optional): path to the directory containing the binary bundles and the source jars. If not defined, the *${project.build.directory}/plugin/* directory is used.
