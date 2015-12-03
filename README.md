@@ -204,6 +204,57 @@ Since this maven plugin isn't yet deployed on maven central, you have to install
 
 ## Eclipse tooling:
 
+### p2repoPublisher
+
+This Eclipse based tool generate a webpage describing the contents of a given p2 repository. It uses yatte (https://github.com/glefur/yatte) as template engine to generate the page.
+
+#### usage
+```
+./p2repoPublisher -a /path/to/eclipse -t /path/to/template -r /path/to/p2/repository -o /path/to/output/file -p /path/to/properties/file
+```
+
+The *-a* argument defines the p2 agent to use. You can either use a standard eclipse installation (since version 3.4) or a tool like p2-admin (https://github.com/mbarbero/p2-admin) for this. The argument should refer to the root directory of the p2 agent.
+
+The *-t* argument defines the template to use for generating the output file.
+
+The *-r* argument specifies the path to the p2 repository to publish.
+
+Finally, the *-o* argument defines the output files where the data will be published.
+
+The *-p* argument allows user to point to a properties files to give additional information about the analyzed repository (name, description...)
+
+> p2repoPublisher currently requires Java 8 to run. Otherwise yatte would not be able to be loaded.
+
+
+#### Template
+When defining your publishing template, you can use the directive
+```
+<!--gen:service qname=fr.smartcontext.osgitools.p2repository.publisher.services.HTMLGen target=repo operation=repositoryArtifacts-->
+```
+to produce an HTML table listing all the artifacts contained in the repository. You can also use every properties you define in the referenced properties file. For instance, if you use a properties file containing the following line:
+``` 
+repo.name=My Repo
+```
+You can generate the name of your repo via: 
+```
+<!--gen:feature target=repo feature=name-->
+```
+
+#### Build
+To build the p2repoPublisher, go to the directory *osgitools/environments/fr.smartcontext.osgitools.p2repository.publisher.environment/maven/aggregator* and run a `mvn clean package`
+
+#### Properties
+A properties file must be defined for p2repoPublisher usage. This file must contain, at least, the following line:
+```
+repo.type=fr.smartcontext.osgitools.p2repository.publisher.internal.data.P2Repository
+```
+You can optionally add the following properties:
+```
+repo.name=My Repo
+repo.description=My Repo description
+repo.version=Version of my repo
+```
+
 ### OSGi Tooling
 
 A set of Eclipse plugins for performing cartography and analysis on OSGi declarative service. Until rework on this part, this tooling is deprecated.
