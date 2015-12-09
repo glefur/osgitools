@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <?pde?>
 <!-- generated with https://github.com/mbarbero/fr.obeo.releng.targetplatform -->
-<target name="Target Platform for p2repoPublisher" sequenceNumber="1448367220">
+<target name="Target Platform for p2repoPublisher" sequenceNumber="1449668446">
   <locations>
     <location includeMode="planner" includeAllPlatforms="false" includeSource="true" includeConfigurePhase="false" type="InstallableUnit">
       <repository id="mars" location="http://download.eclipse.org/releases/mars/"/>
@@ -23,8 +23,9 @@
       <repository id="eclipse" location="http://download.eclipse.org/eclipse/updates/4.5"/>
     </location>
     <location includeMode="planner" includeAllPlatforms="false" includeSource="true" includeConfigurePhase="false" type="InstallableUnit">
-      <unit id="fr.smartcontext.yatte.engine" version="0.7.0.201511230836"/>
-      <unit id="fr.smartcontext.yatte.application" version="0.7.0.201511230836"/>
+      <unit id="fr.smartcontext.yatte.engine" version="0.7.0.201512091336"/>
+      <unit id="fr.smartcontext.yatte.application" version="0.7.0.201512091336"/>
+      <unit id="fr.smartcontext.yatte.context.cli" version="0.7.0.201512091336"/>
       <repository id="yatte" location="http://glefur.github.io/p2/yatte/repository"/>
     </location>
   </locations>

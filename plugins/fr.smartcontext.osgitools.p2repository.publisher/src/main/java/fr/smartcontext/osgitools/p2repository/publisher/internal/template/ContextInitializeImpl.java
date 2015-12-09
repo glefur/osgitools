@@ -8,6 +8,7 @@
 package fr.smartcontext.osgitools.p2repository.publisher.internal.template;
 
 import java.net.URI;
+import java.util.List;
 
 import org.apache.commons.cli.CommandLine;
 import org.eclipse.core.runtime.NullProgressMonitor;
@@ -23,7 +24,7 @@ import fr.smartcontext.osgitools.p2repository.publisher.PublisherParametersConst
 import fr.smartcontext.osgitools.p2repository.publisher.internal.data.Artifact;
 import fr.smartcontext.osgitools.p2repository.publisher.internal.data.P2Repository;
 import fr.smartcontext.osgitools.p2repository.publisher.p2.P2Service;
-import fr.smartcontext.yatte.application.context.PropertiesContextInitializer;
+import fr.smartcontext.yatte.context.cli.properties.PropertiesContextInitializer;
 import fr.smartcontext.yatte.engine.context.ProcessingContext;
 
 /**
@@ -34,13 +35,14 @@ public class ContextInitializeImpl extends PropertiesContextInitializer {
 
 	/**
 	 * {@inheritDoc}
-	 * @see fr.smartcontext.yatte.application.context.ContextInitializer#initContext(org.osgi.framework.BundleContext, org.apache.commons.cli.CommandLine)
+	 * @see fr.smartcontext.yatte.context.cli.properties.PropertiesContextInitializer#initContext(org.osgi.framework.BundleContext, java.util.List)
 	 */
 	@Override
-	public ProcessingContext initContext(BundleContext bundleContext, CommandLine cmdLine) throws Exception {
-		ProcessingContext processingContext = super.initContext(bundleContext, cmdLine);
+	public ProcessingContext initContext(BundleContext bundleContext, List<String> parameters) throws Exception {
+		ProcessingContext processingContext = super.initContext(bundleContext, parameters);
 		ServiceReference<P2Service> p2ServiceRef = bundleContext.getServiceReference(P2Service.class);
 		P2Service p2Service = bundleContext.getService(p2ServiceRef);
+		CommandLine cmdLine = getCmdLine(parameters, getOptions(bundleContext));
 		IProvisioningAgent p2Agent = p2Service.setupAgent(bundleContext, new URI("file:" + cmdLine.getOptionValue(PublisherParametersConstants.AGENT_OPTION_NAME)));
 		String repositoryPath = cmdLine.getOptionValue(PublisherParametersConstants.REPOSITORY_OPTION_NAME);
 		URI repoURI;
@@ -58,5 +60,5 @@ public class ContextInitializeImpl extends PropertiesContextInitializer {
 		}
 		return processingContext;
 	}
-	
+
 }

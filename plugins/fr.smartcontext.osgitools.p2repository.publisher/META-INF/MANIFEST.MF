@@ -7,7 +7,8 @@ Bundle-Vendor: SmartContext
 Require-Bundle: org.eclipse.core.runtime
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Import-Package: fr.smartcontext.yatte.application,
- fr.smartcontext.yatte.application.context,
+ fr.smartcontext.yatte.context.cli,
+ fr.smartcontext.yatte.context.cli.properties,
  fr.smartcontext.yatte.engine,
  fr.smartcontext.yatte.engine.context,
  org.apache.commons.cli;version="1.2.0",
